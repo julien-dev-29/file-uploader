@@ -1,0 +1,14 @@
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/header.ejs') %>
+            <form action="/register" method="post">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <button type="submit">Register</button>
+            </form>
+    </body>
+
+    </html>

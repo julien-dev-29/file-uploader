@@ -1,0 +1,46 @@
+{
+  "name": "file-uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "type": "module",
+  "scripts": {
+    "start": "",
+    "dev": "tsx watch app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julien-dev-29/file-uploader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julien-dev-29/file-uploader/issues"
+  },
+  "homepage": "https://github.com/julien-dev-29/file-uploader#readme",
+  "dependencies": {
+    "@prisma/client": "^6.16.2",
+    "@quixo3/prisma-session-store": "^3.1.13",
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.2.1",
+    "method-override": "^3.0.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
+    "@types/method-override": "^3.0.0",
+    "@types/passport": "^1.0.17",
+    "@types/passport-local": "^1.0.38",
+    "prisma": "^6.16.2",
+    "tsx": "^4.20.5"
+  }
+}
