@@ -9,6 +9,8 @@ import session from 'express-session'
 import { PrismaClient } from './generated/prisma'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import authRouter from './routes/auth.routes.ts'
+import folderRouter from './routes/folder.routes.ts'
+import fileRouter from './routes/file.routes.ts'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -27,7 +29,7 @@ app.set('view engine', 'ejs')
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         const method = req.body._method
@@ -36,8 +38,6 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 app.use(express.json())
-
-const prisma = new PrismaClient();
 
 app.use(
     session({
@@ -48,7 +48,7 @@ app.use(
             maxAge: 1000 * 60 * 60 * 24, // 1 jour
         },
         store: new PrismaSessionStore(
-            prisma as any, // Cast to 'any' to satisfy type requirement
+            new PrismaClient(), // Cast to 'any' to satisfy type requirement
             {
                 checkPeriod: 2 * 60 * 1000,  // toutes les 2 min, supprime les sessions expirées
                 dbRecordIdIsSessionId: true, // option pratique
@@ -68,8 +68,15 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.get('/', (req, res) => res.render('index'))
+app.get(
+    '/',
+    (req, res) => res.render('index', {
+        title: "Home"
+    })
+)
 app.use(authRouter)
+app.use('/folders', folderRouter)
+app.use('/files', fileRouter)
 
 app.listen(PORT, (err) => {
     if (err) throw err

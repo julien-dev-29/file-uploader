@@ -69,21 +69,21 @@ const validateSecret = [
 
 export default {
     authGet: (req: Request, res: Response) => {
-        res.render('auth/login')
+        res.render('auth/login', { title: "Login" })
     },
 
     registerGet: (req: Request, res: Response) => {
-        res.render('auth/register')
+        res.render('auth/register', { title: "Register" })
     },
 
     registerPost: async (req: Request, res: Response) => {
         let { email, password } = req.body
         password = await bcrypt.hash(password, 10)
         userService.createUser({ email, password })
-            .then(() => res.render('auth/login'))
+            .then(() => res.redirect('/login'))
     },
 
-    logout: (req: Request | any, res: Response, next: NextFunction) => {
+    logout: (req: Request, res: Response, next: NextFunction) => {
         req.logout((err: Error) => {
             if (err) return next(err);
             res.redirect("/");

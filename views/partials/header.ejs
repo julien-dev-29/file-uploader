@@ -1,9 +1,24 @@
 <header>
-    <h1>📁File Uploader</h1>
+    <div>
+        <div class="user">
+            <% if (locals.user) { %>
+                connecté en tant que:
+                <strong>
+                    <%= locals.user.email %>
+                </strong>
+                <a href="/logout">Logout</a>
+                <% } %>
+
+        </div>
+        <h1>⬆️File Uploader</h1>
+
+    </div>
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/folrders">Folders</a></li>
+            <% if (locals.user) { %>
+                <li><a href="/folders">Folders</a></li>
+                <% } %>
         </ul>
     </nav>
     <hr>

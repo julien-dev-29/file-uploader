@@ -1,0 +1,38 @@
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/header.ejs') %>
+            <a href="/folders">Back</a>
+            <div class="folder-header">
+                <h1>📂
+                    <%= title %>
+                </h1>
+                <div>
+                    <a href="/folders/<%= folder.id %>/edit">Edit</a>
+                    <form action="/folders/<%= folder.id %>" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" onclick="return confirm('Are you sure')">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <form action="/files/create" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="folderId" value="<%= folder.id %>">
+                <input type="file" id="file" name="file" required>
+                <button type="submit">Upload</button>
+            </form>
+            <ul>
+                <% if (files.length> 0) { %>
+                    <% files.forEach(file=> { %>
+                        <li>
+                            <a href="/files/<%= folder.id %>/<%= file.id %>">💾
+                                <%= file.originalname %>
+                            </a>
+                        </li>
+                        <% }) %>
+                            <% } else { %>
+                                <p>Pas de fichiers</p>
+                                <% } %>
+            </ul>
+    </body>
+
+    </html>

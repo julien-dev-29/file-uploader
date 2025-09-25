@@ -1,4 +1,4 @@
-import { userModel } from "../models/user.model.ts";
+import { prisma } from "../prisma/client.ts"
 
 export default {
     /**
@@ -6,7 +6,7 @@ export default {
      * @returns 
      */
     getAllUsers: async () => {
-        return await userModel.findMany();
+        return await prisma.user.findMany()
     },
 
     /**
@@ -18,7 +18,7 @@ export default {
         email: string,
         password: string
     }) => {
-        return await userModel.create({ data });
+        return await prisma.user.create({ data });
     },
 
     /**
@@ -27,7 +27,7 @@ export default {
      * @returns 
      */
     getUserById: async (id: number) => {
-        return await userModel.findUnique(
+        return await prisma.user.findUnique(
             {
                 where: {
                     id: id
@@ -42,7 +42,7 @@ export default {
      * @returns 
      */
     getUserByEmail: async (email: string) => {
-        return await userModel.findUnique(
+        return await prisma.user.findUnique(
             {
                 where: {
                     email: email

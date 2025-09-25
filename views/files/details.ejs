@@ -1,0 +1,21 @@
+<%- include('../partials/head.ejs') %>
+
+    <body>
+        <%- include('../partials/header.ejs') %>
+            <h1>💾
+                <%= title %>
+            </h1>
+            <p>
+                Size: <%= (file.size / 1024).toFixed(2) %> KB
+            </p>
+            <a href="/folders/<%= folderId %>">Back to Folder</a>
+            <a href="/files/<%= file.id %>/download">Download</a>
+            <form action="/files/<%= file.id %>" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="folderId" value="<%= folderId %>">
+                <button type="submit" onclick="return confirm('Are you sure')">Delete</button>
+            </form>
+
+    </body>
+
+    </html>

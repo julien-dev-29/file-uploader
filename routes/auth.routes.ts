@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/login', authController.authGet)
 router.post('/login', passport.authenticate("local", {
-    successRedirect: '/messages',
+    successRedirect: '/folders',
     failureRedirect: '/login',
     failureMessage: true
 }))

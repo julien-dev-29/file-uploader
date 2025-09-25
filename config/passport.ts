@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import userService from '../services/user.service.js';
 import bcrypt from 'bcrypt';
+
 passport.use(
     new LocalStrategy(
         {
