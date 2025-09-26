@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import 'dotenv/config'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
+import bootstrap from 'bootstrap'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import methodOverride from 'method-override'
@@ -11,6 +12,7 @@ import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import authRouter from './routes/auth.routes.ts'
 import folderRouter from './routes/folder.routes.ts'
 import fileRouter from './routes/file.routes.ts'
+
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -58,8 +60,18 @@ app.use(
     })
 );
 
+// Bootstrap
+app.use(
+    express.static(path.join(__dirname, "node_modules/bootstrap/dist/"))
+);
+app.use(
+    express.static(path.join(__dirname, "node_modules/bootstrap-icons/font/"))
+);
+
+
 // Passport
 import './config/passport.js'
+import { isAuth } from './middlewares/auth.middleware.ts'
 app.use(passport.initialize())
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -70,13 +82,23 @@ app.use((req, res, next) => {
 // Routes
 app.get(
     '/',
+    isAuth,
     (req, res) => res.render('index', {
+        page_name: "home",
         title: "Home"
     })
 )
 app.use(authRouter)
 app.use('/folders', folderRouter)
 app.use('/files', fileRouter)
+
+// 404 
+app.use((req: Request, res: Response) => {
+    res.status(404).render('404', {
+        page_name: "404",
+        title: "404 - Page Not Found"
+    })
+})
 
 app.listen(PORT, (err) => {
     if (err) throw err

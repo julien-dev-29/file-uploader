@@ -1,14 +1,24 @@
 <%- include('../partials/head.ejs') %>
 
-    <body>
+    <body class="min-vh-100 row flex-column justify-content-between align-items-center m-0 bg-body-tertiary">
         <%- include('../partials/header.ejs') %>
-            <form action="/register" method="post">
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-                <button type="submit">Register</button>
-            </form>
+            <div class="p-3 d-flex justify-content-center w-100">
+                <form class="w-100"> 
+                    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                            required>
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            required>
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Sign up</button>
+                </form>
+            </div>
+            <%- include('../partials/footer.ejs') %>
     </body>
 
     </html>

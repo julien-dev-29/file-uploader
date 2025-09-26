@@ -69,11 +69,17 @@ const validateSecret = [
 
 export default {
     authGet: (req: Request, res: Response) => {
-        res.render('auth/login', { title: "Login" })
+        res.render('auth/login', {
+            page_name: "home",
+            title: "Login"
+        })
     },
 
     registerGet: (req: Request, res: Response) => {
-        res.render('auth/register', { title: "Register" })
+        res.render('auth/register', {
+            page_name: "home",
+            title: "Register"
+        })
     },
 
     registerPost: async (req: Request, res: Response) => {

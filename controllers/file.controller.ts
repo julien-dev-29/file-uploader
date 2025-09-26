@@ -40,6 +40,7 @@ export default {
         fileService.findById(idNum)
             .then((file) => {
                 res.render('files/details', {
+                    page_name: "folders",
                     title: file?.originalname,
                     folderId: folderId,
                     file: file

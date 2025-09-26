@@ -23,6 +23,7 @@ export default {
         }
         folderService.getAll(req.user.id)
             .then(folders => res.render("folders/index", {
+                page_name: "folders",
                 title: "Folders",
                 folders: folders
             }))
@@ -79,6 +80,7 @@ export default {
             .then((folder) => {
                 console.log(folder?.files);
                 res.render('folders/details', {
+                    page_name: "folders",
                     title: folder?.name,
                     folder: folder,
                     files: folder?.files
@@ -96,6 +98,7 @@ export default {
         folderService.findById(Number(req.params.id))
             .then((folder) => {
                 res.render('folders/edit', {
+                    page_name: "folders",
                     title: "Editer: " + folder?.name,
                     folder: folder
                 })

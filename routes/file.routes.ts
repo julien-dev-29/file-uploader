@@ -15,8 +15,8 @@ const validateFile = [
             if (req.file.size > 5 * 1024 * 1024) { // 5MB limit
                 throw new Error('File size exceeds 5MB');
             }
-            if (!['image/jpeg', 'image/png', 'application/pdf'].includes(req.file.mimetype)) {
-                throw new Error('Invalid file type. Only JPEG, PNG, and PDF are allowed.');
+            if (!['image/jpeg', 'image/png', 'image/gif', 'application/pdf'].includes(req.file.mimetype)) {
+                throw new Error('Invalid file type. Only JPEG, PNG, GIF and PDF are allowed.');
             }
             if (req.file.originalname.length > 100) {
                 throw new Error('File name is too long. Maximum 100 characters allowed.');
@@ -34,7 +34,7 @@ const upload = multer({ storage });
 
 router.get('/', isAuth, fileController.index)
 router.get('/create', isAuth, fileController.create)
-router.post('/create', isAuth, validateFile, upload.single('file'), fileController.store)
+router.post('/create', isAuth, upload.single('file'), validateFile, fileController.store)
 router.get('/:id/download', isAuth, fileController.download)
 router.get('/:id/edit', isAuth, fileController.edit)
 router.get('/:folderId/:id', isAuth, fileController.details)

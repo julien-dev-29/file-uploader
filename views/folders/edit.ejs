@@ -1,17 +1,21 @@
 <%- include('../partials/head.ejs') %>
 
-    <body>
+    <body class="min-vh-100 d-flex flex-column justify-content-between m-0">
         <%- include('../partials/header.ejs') %>
-            <h1>
-                <%= title %>
-            </h1>
-            <%- include('../partials/errors.ejs') %>
-                <form action="/folders/<%= folder.id %>" method="post">
-                    <input type="hidden" name="_method" value="PUT">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" value="<%= folder.name %>">
-                    <button type="submit">Edit</button>
-                </form>
+            <div class="flex-grow-1 p-3">
+                <a class="btn btn-outline-info mb-2" href="/folders/<%= folder.id %>"><i class="bi bi-arrow-left-square"></i></a>
+                <h1>
+                    <%= title %>
+                </h1>
+                <%- include('../partials/errors.ejs') %>
+                    <form action="/folders/<%= folder.id %>" method="post">
+                        <input type="hidden" name="_method" value="PUT">
+                        <label class="form-label" for="name">Name</label>
+                        <input class="form-control" type="text" name="name" id="name" value="<%= folder.name %>">
+                        <button class="btn btn-primary mt-2" type="submit">Edit</button>
+                    </form>
+            </div>
+            <%- include('../partials/footer.ejs') %>
     </body>
 
     </html>

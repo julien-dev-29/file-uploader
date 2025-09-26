@@ -1,27 +1,32 @@
 <%- include('../partials/head.ejs') %>
 
-    <body>
+    <body class="d-flex min-vh-100 flex-column justify-content-between">
         <%- include('../partials/header.ejs') %>
-            <h1>Folders</h1>
-            <%- include('../partials/errors.ejs') %>
-            <form action="/folders/create" method="post">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" required>
-                <button type="submit">Create</button>
-            </form>
-            <ul>
-                <% if (folders.length> 0) { %>
-                    <% folders.forEach(folder=> { %>
-                        <li>📁
-                            <a href="/folders/<%= folder.id %>">
-                                <%= folder.name %>
-                            </a>
-                        </li>
-                        <% }) %>
-                            <% } else { %>
-                                Pas de folders
-                                <% } %>
-            </ul>
+            <div class="flex-grow-1 p-4">
+                <h1>Folders</h1>
+                <%- include('../partials/errors.ejs') %>
+                    <form action="/folders/create" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="name" id="name" aria-label="Folder's name"
+                                aria-describedby="button-addon2" required>
+                            <button class="btn btn-primary" type="submit" id="button-addon2">Add a folder</button>
+                        </div>
+                    </form>
+                    <ul>
+                        <% if (folders.length> 0) { %>
+                            <% folders.forEach(folder=> { %>
+                                <li class="list-group-item">📁
+                                    <a class="link-secondary" href="/folders/<%= folder.id %>">
+                                        <%= folder.name %>
+                                    </a>
+                                </li>
+                                <% }) %>
+                                    <% } else { %>
+                                        Pas de folders
+                                        <% } %>
+                    </ul>
+            </div>
+            <%- include('../partials/footer.ejs') %>
     </body>
 
     </html>
