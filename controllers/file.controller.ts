@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import fileService from '../services/file.service.ts'
+import { v2 as cloudinary } from 'cloudinary'
 import { validationResult } from "express-validator";
 
 declare global {
@@ -9,10 +10,26 @@ declare global {
         }
     }
 }
+
+// Configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET ?? "",
+    secure: true
+});
+
+// Options
+const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+};
+
 export default {
     index: (req: Request, res: Response) => { },
     create: (req: Request, res: Response) => { },
-    store: (req: Request, res: Response) => {
+    store: async (req: Request, res: Response) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -23,16 +40,25 @@ export default {
         const { originalname, encoding, mimetype, size, destination, filename, path } = req.file
         const { folderId } = req.body
         const folderIdNum = Number(folderId)
-        fileService.create(
-            originalname,
-            encoding,
-            mimetype,
-            size,
-            destination,
-            filename,
-            path,
-            folderIdNum)
-            .then(() => res.redirect('/folders/' + folderIdNum))
+        try {
+            // Upload the image
+            const result = await cloudinary.uploader.upload(path, options);
+            console.log(result);
+            await fileService.create(
+                originalname,
+                encoding,
+                mimetype,
+                size,
+                destination,
+                filename,
+                path,
+                folderIdNum)
+            res.redirect('/folders/' + folderIdNum)
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to upload file.' });
+        }
+
     },
     details: (req: Request, res: Response) => {
         const { id, folderId } = req.params
@@ -64,5 +90,6 @@ export default {
                 if (!file) return res.status(400).send('No file founded.')
                 res.download(file?.path)
             })
+            .catch(err => res.status(400).send('No file downloaded.'))
     }
 }

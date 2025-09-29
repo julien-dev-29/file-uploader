@@ -87,6 +87,7 @@ export default {
         password = await bcrypt.hash(password, 10)
         userService.createUser({ email, password })
             .then(() => res.redirect('/login'))
+            .catch(err => res.status(400).send("Pas cool!"))
     },
 
     logout: (req: Request, res: Response, next: NextFunction) => {

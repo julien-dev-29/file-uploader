@@ -1,6 +1,16 @@
 import { Router } from "express";
 import passport from 'passport'
+import { body, validationResult } from "express-validator";
 import authController from '../controllers/auth.controller.ts'
+
+const validateRegister = [
+    body('email')
+        .escape()
+        .isEmpty().withMessage('Email is required')
+        .isEmail().withMessage('Not a valid email'),
+    body('password')
+        .isEmpty().withMessage('Password is required')
+]
 
 const router = Router()
 
@@ -11,7 +21,7 @@ router.post('/login', passport.authenticate("local", {
     failureMessage: true
 }))
 router.get('/register', authController.registerGet)
-router.post('/register', authController.registerPost)
+router.post('/register', validateRegister, authController.registerPost)
 router.get('/logout', authController.logout)
 
 export default router
